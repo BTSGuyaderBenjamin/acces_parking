@@ -12,49 +12,39 @@ void setup() {
 
 void loop() {
   int tempo = 0, testTempo;
-  static int nombreVoiture = 0;
+  static unsigned int nombreVoiture = 0;
   
   if(boucleAmont()==0 && boucleAval()==1){
     testTempo=1;
-    Wire.beginTransmission(0x20);             //Bit de start + adresse
-    Wire.write(0xFD);                         //Trame
-    Wire.endTransmission();                  //Bit de stop
-    delay(1000);
-    while(boucleAmont()==0 && boucleAval()==1 && testTempo==1){
-      tempo++;
-      delay(10);
-      if(tempo == 1000){
-        testTempo=0;
+    if(validation()==0){
+      ouvrir();
+      while(boucleAmont()==0 && boucleAval()==1 && testTempo==1){
+        tempo++;
+        delay(30);
+        if(tempo == 1000){
+          testTempo=0;
+        }
       }
-    }
+   }
     if(boucleAmont()==1 || boucleAval()==0){
       if(boucleAmont()==0 || boucleAval()==1){
         while(boucleAmont()==0 || boucleAval()==0);
         nombreVoiture++;
       }
     }
-    Wire.beginTransmission(0x20);             //Bit de start + adresse
-    Wire.write(0xFE);                         //Trame
-    Wire.endTransmission();                   //Bit de stop
-    delay(1000);
-  }
+    fermer();
+ }
 
   if(boucleAmont()==1 && boucleAval()==0){
-    Wire.beginTransmission(0x20);             //Bit de start + adresse
-    Wire.write(0xFD);                         //Trame
-    Wire.endTransmission();                   //Bit de stop
-    delay(1000);
+    ouvrir();
     while(boucleAval()==0 && boucleAmont()==1);
     if(boucleAmont()==0 || boucleAval()==0){
       while(boucleAmont()==0 || boucleAval()==0);
       nombreVoiture--;
-      Wire.beginTransmission(0x20);             //Bit de start + adresse
-      Wire.write(0xFE);                         //Trame
-      Wire.endTransmission();                   //Bit de stop
-      delay(1000);
+      fermer();
     }
   }
- Serial.println("Nombre de voiture:");
+ Serial.print("Nombre de voiture:");
  Serial.println(nombreVoiture,DEC);
 }
 

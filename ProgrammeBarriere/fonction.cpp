@@ -26,3 +26,27 @@ int boucleAval(){
   return variableAval; 
 }
 
+int validation(){
+  int variableValidation;
+  Wire.requestFrom(0x21, 1);   
+  while(Wire.available()){
+    variableValidation = Wire.read();
+    variableValidation = (variableValidation & 0x01);
+  }
+  return variableValidation;
+}
+
+void ouvrir(){
+    Wire.beginTransmission(0x20);             //Bit de start + adresse
+    Wire.write(0xFD);                         //Trame
+    Wire.endTransmission();                  //Bit de stop
+    delay(1000);
+}
+
+void fermer(){
+    Wire.beginTransmission(0x20);             //Bit de start + adresse
+    Wire.write(0xFE);                         //Trame
+    Wire.endTransmission();                   //Bit de stop
+    delay(1000);
+}
+
