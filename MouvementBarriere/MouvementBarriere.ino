@@ -15,10 +15,7 @@ void setup()
 /*fonction Loop exécutée en boucle dans le programme principal*/
 void loop()                             
 {
-  Wire.beginTransmission(0x20);         //Bit de start + adresse
-  Wire.write(0xFD);                     //Trame d'ouverture de la barrière
-  Wire.endTransmission();               //Bit de stop
-  delay(1000);                          //Delais de 1000ms
+                         //Delais de 1000ms
   Wire.beginTransmission(0x20);         //Bit de start + adresse
   Wire.write(0xFE);                     //Trame de fermeture de la barrière
   Wire.endTransmission();               //Bit de stop

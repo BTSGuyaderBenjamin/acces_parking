@@ -9,7 +9,7 @@ void setup() {
   Serial.begin(9600);           //Initialise la vitesse de transmission à 9600Bauds
   Wire.begin();                 //Initialise la bibliothèque Wire et joint
                                 //le bus I2C au maître ou à l'esclave
-  initI2C(122);                 //Initialisation du bus I2C à 122
+  initI2C(255);                 //Initialisation du bus I2C à 122
 }
 
 /*fonction Loop exécutée en boucle dans le programme principal*/
@@ -19,6 +19,8 @@ void loop() {
 /*vérification d'un véhicule en entrée et temporisation*/
   if(boucleAmont()==0 && boucleAval()==1){
     testTempo=1;
+    setEclairage(0x21, 0);
+    while(validation()==1);
     if(validation()==0){
       ouvrir();
       while(boucleAmont()==0 && boucleAval()==1 && testTempo==1){

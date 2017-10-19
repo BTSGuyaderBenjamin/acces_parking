@@ -49,3 +49,9 @@ void fermer(){              //Fonction fermer qui ne renvoie rien et qui n'accep
     delay(1000);
 }
 
+void message(){
+   setEclairage(0x21, 0);
+   envoyerMessage(0x21,MESSAGE1,LIGNE1);
+   envoyerMessage(0x21,MESSAGE2,LIGNE2);
+}
+
